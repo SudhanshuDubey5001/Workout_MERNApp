@@ -61,7 +61,7 @@ const workout_update = async (req, res) => {
     return res.status(404).json({ error: errorMessages.OBJECT_ID_NOT_VALID });
   }
   try {
-    const result = await Workout.updateOne({ _id: id }, { ...update });
+    const result = await Workout.update({ _id: id }, { ...update });
     res.status(200).json(result);
   } catch (error) {
     res.status(400).json({ error: error.message });

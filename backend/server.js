@@ -2,9 +2,12 @@
 // install the package dotenv. We can access the variables in .env file using process which is globally available
 require("dotenv").config();
 const express = require("express");
-const workoutRouter = require("./routes/workout");
 //this time we will use mongoose library to interact with the DB
 const mongoose = require("mongoose");
+
+//routes
+const workoutRouter = require("./routes/workout");
+const userRouter = require("./routes/userAuth");
 
 const app = express();
 const port = process.env.PORT;
@@ -26,6 +29,8 @@ app.use((req, res, next) => {
 
 //Routes
 app.use("/api/workouts", workoutRouter);
+
+app.use('/api/user', userRouter)
 
 mongoose
   .connect(process.env.MONGO_URI)

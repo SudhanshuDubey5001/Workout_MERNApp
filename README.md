@@ -19,7 +19,7 @@ N - Node.js
 ## Dependencies
 - State Management using Zustand: [zustand](https://github.com/pmndrs/zustand)
 - Authentication system using JSON Web Token: [JWT](https://github.com/auth0/node-jsonwebtoken#readme)
-- Encryption/Decryption of password using [bcrypt](https://github.com/kelektiv/node.bcrypt.js#readme)
+- Encryption of password using [bcrypt](https://github.com/kelektiv/node.bcrypt.js#readme)
 - Environment variables using [dotenv](https://github.com/motdotla/dotenv#readme)
 - Mongoose for data schema and structure in MongoDB [Mongoose](https://mongoosejs.com/docs/)
 - For validating email/password [Validator](https://github.com/validatorjs/validator.js) 

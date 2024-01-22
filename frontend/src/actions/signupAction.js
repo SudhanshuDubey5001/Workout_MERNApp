@@ -28,7 +28,7 @@ export const signupAction = async ({ request }) => {
     },
   });
 
-  console.log("Response ="+ response.error);
+  console.log("Response ="+ response);
 
   if (!response.ok) {
     throw Error("Check your internet connection");

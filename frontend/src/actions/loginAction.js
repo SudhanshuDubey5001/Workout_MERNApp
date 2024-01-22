@@ -1,33 +1,34 @@
-import { useAuthStore } from "../hooks/authStore";
+// export const loginAction = async ({ request }) => {
+//   console.log("Login Action triggered");
 
-export const LoginAction = async ({ request }) => {
-  console.log("Login Action triggered");
+//   const data = await request.formData();
+//   console.log("Data = " + data);
+//   const user = {
+//     email: data.get("email"),
+//     password: data.get("password"),
+//   };
+//   console.log("Email =" + user.email);
+//   console.log("Password =" + user.password);
 
-  const data = await request.formData();
-  const user = {
-    email: data.get("email"),
-    password: data.get("password"),
-  };
+//   //   const response = await fetch("/api/user/login", {
+//   //     method: "POST",
+//   //     body: JSON.stringify(user),
+//   //     headers: {
+//   //       "Content-Type": "application/json",
+//   //     },
+//   //   });
 
-  const response = await fetch("/api/user/login", {
-    method: "POST",
-    body: JSON.stringify(user),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+//   //   const json = await response.json();
 
-  const json = await response.json();
+//   //   if (!response.ok) {
+//   //     throw Error("Check your internet connection");
+//   //   }
 
-  if (!response.ok) {
-    throw Error("Check your internet connection");
-  }
+//   //   const userCredentials = {
+//   //     email: json.email,
+//   //     token: json.token
+//   //   }
 
-  const userCredentials = {
-    email: json.email,
-    token: json.token
-  }
-
-  console.log("User successfully logged in");
-  return userCredentials;
-};
+//   //   localStorage.setItem('user',JSON.stringify(userCredentials));
+//   return user;
+// };

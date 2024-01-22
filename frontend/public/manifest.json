@@ -1,0 +1,8 @@
+{
+  "name": "Workout App",
+  "short_name": "MERN",
+  "description": "A description of your React app",
+  "start_url": "/",
+  "display": "standalone",
+  "splash_pages": null
+}

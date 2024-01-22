@@ -1,23 +1,21 @@
 import {
+  Navigate,
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
-  redirect,
 } from "react-router-dom";
-import { create } from "zustand";
 //layouts
 import AuthLayout from "./layouts/AuthLayout";
 import RootLayout from "./layouts/RootLayout";
 //pages
-import Home, { homeLoader } from "./pages/Home";
+import Home from "./pages/Home";
 import About from "./pages/About";
 import RouterError from "./pages/RouterError";
 import ErrorPage from "./pages/ErrorPage";
 import { Signup } from "./pages/auth/Signup";
 //actions
 import { homeActions } from "./actions/homeActions";
-import { LoginAction } from "./actions/loginAction";
 import { signupAction as SignupAction } from "./actions/signupAction";
 //hooks
 import { useAuthStore } from "./hooks/authStore";
@@ -30,11 +28,11 @@ const routerMain = createBrowserRouter(
         <Route
           path="/" //don't use "index" as action method does not work
           element={<Home />}
-          loader={homeLoader}
+          // loader={homeLoader}
           action={homeActions}
         />
-        <Route path="/about" element={<About />} />
       </Route>
+      <Route path="signup" element={<Navigate to="/" replace />} />
       <Route path="*" element={<ErrorPage />} />
     </Route>
   )
@@ -43,26 +41,22 @@ const routerMain = createBrowserRouter(
 const routerAuth = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<AuthLayout />} errorElement={<RouterError />}>
-      <Route path="/" element={<Login />} action={LoginAction} />
+      <Route path="/" element={<Login />} />
       <Route path="signup" element={<Signup />} action={SignupAction} />
+      <Route path="about" element={<About />} />
       <Route path="*" element={<ErrorPage />} />
     </Route>
   )
 );
 
 function App() {
-  const token = useAuthStore((state) => state.token);
-  const email = useAuthStore((state) => state.email);
-  console.log("Token = " + token);
-  console.log("Email = " + email);
-  if(token && email){
-    localStorage.setItem('token',token)
-    localStorage.setItem('email',email)
+  const { getUser } = useAuthStore();
+  const user = getUser();
+  // const isUserLogin = loggedIn();
+  if (!user) {
+    return <RouterProvider router={routerAuth} />;
   }
-  if (localStorage.getItem("token")) {
-    return <RouterProvider router={routerMain} />;
-  }
-  return <RouterProvider router={routerAuth} />;
+  return <RouterProvider router={routerMain} />;
 }
 
 export default App;

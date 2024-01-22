@@ -2,13 +2,12 @@ import { Link, NavLink, Outlet } from "react-router-dom";
 import { useAuthStore } from "../hooks/authStore";
 
 export default function RootLayout() {
-  const state = useAuthStore();
+  const { logout, getUser } = useAuthStore();
+  const user = getUser();
 
   const handleLogout = (e) => {
     e.preventDefault();
-    localStorage.clear();
-    state.removeUser();
-    window.location.reload();
+    logout();
   };
 
   return (
@@ -19,8 +18,7 @@ export default function RootLayout() {
             <h1>GetBetter</h1>
           </Link>
           <div className="nav-items">
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="about">About</NavLink>
+            <p>{user.email} |</p>
             <button onClick={handleLogout}>Logout</button>
           </div>
         </nav>

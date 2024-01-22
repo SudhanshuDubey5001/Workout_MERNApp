@@ -10,6 +10,7 @@ export default function AuthLayout() {
           </Link>
           <div className="nav-items">
             <NavLink to="/">Login</NavLink>
+            <NavLink to="about">About</NavLink>
           </div>
         </nav>
       </header>

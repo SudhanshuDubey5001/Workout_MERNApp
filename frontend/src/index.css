@@ -23,6 +23,23 @@ body {
   font-size: 20px;
 }
 
+.container p {
+  color: white;
+  padding: 0;
+  margin: auto;
+  border-radius: 4px;
+  padding: 0px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+  font-size: 15px;
+}
+
+.container button {
+  margin-left: 20px;
+  background-color: transparent;
+  font-size: 20px;
+  padding: 5px;
+}
+
 .workout-add {
   margin-right: 100px;
 }
@@ -184,11 +201,11 @@ input.error {
   background-color: #ffffff;
 }
 
-.login h2{
+.login h2 {
   text-align: center;
 }
 
-.login p{
+.login p {
   text-align: center;
 }
 
@@ -230,4 +247,3 @@ button {
 button:hover {
   background-color: #45a049;
 }
-

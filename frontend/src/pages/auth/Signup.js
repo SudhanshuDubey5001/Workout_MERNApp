@@ -3,7 +3,7 @@ import { useAuthStore } from "../../hooks/authStore";
 import { useState } from "react";
 
 export const Signup = () => {
-  const { signup, loading, error } = useAuthStore();
+  const { signup, loading, errorSignup } = useAuthStore();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,7 +16,7 @@ export const Signup = () => {
     console.log("Email = " + email);
     console.log("Password = " + password);
     if (password === retypePassword) {
-      const result = await signup(email, password);
+      await signup(email, password);
     } else {
       setErrorLocal("The passwords do not match");
     }
@@ -59,7 +59,7 @@ export const Signup = () => {
         <button disabled={loading} onClick={handleSubmit}>
           Submit
         </button>
-        {error && <div className="error">{error}</div>}
+        {errorSignup && <div className="error">{errorSignup}</div>}
         {errorLocal && <div className="error">{errorLocal}</div>}
         <p>
           Already have an account? <Link to="/">Login</Link>

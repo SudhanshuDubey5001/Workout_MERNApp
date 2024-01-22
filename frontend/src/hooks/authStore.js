@@ -3,22 +3,23 @@ import { create } from "zustand";
 export const useAuthStore = create((set) => ({
   user: null,
   loading: null,
-  error: null,
+  errorLogin: null,
+  errorSignup: null,
+  resetAll: false,
   getUser: () => {
     const user = JSON.parse(localStorage.getItem("user"));
     return user;
   },
   logout: () => {
+    set((state) => ({ user: null, resetAll: true }));
     localStorage.clear();
-    set(state => ({user:null}))
   },
 
   login: async (email, password) => {
     if (!email || !password) return;
     console.log("Loggin in....");
-    set((state) => ({ loading: true }));
+    set((state) => ({ loading: true, resetAll: false }));
     const user = { email, password };
-    console.log("Calling login API...");
     const response = await fetch("/api/user/login", {
       method: "POST",
       body: JSON.stringify(user),
@@ -29,12 +30,11 @@ export const useAuthStore = create((set) => ({
 
     const json = await response.json();
 
-    console.log("Got the response...");
     if (!response.ok) {
       console.log("Some error occurred: " + json.error);
       set((state) => ({
         loading: false,
-        error: json.error,
+        errorLogin: json.error,
       }));
       return false;
     } else {
@@ -42,12 +42,13 @@ export const useAuthStore = create((set) => ({
         email: json.email,
         token: json.token,
       };
-      //setting states to logged in --
-      console.log("Everything okay: setting up user credentials");
+
       localStorage.setItem("user", JSON.stringify(userCredentials));
+
       set((state) => ({
         user: userCredentials,
         loading: false,
+        errorLogin: null,
       }));
       return true;
     }
@@ -73,7 +74,7 @@ export const useAuthStore = create((set) => ({
       console.log("Some error occurred: " + json.error);
       set((state) => ({
         loading: false,
-        error: json.error,
+        errorSignup: json.error,
       }));
       return false;
     } else {
@@ -87,6 +88,7 @@ export const useAuthStore = create((set) => ({
       set((state) => ({
         user: userCredentials,
         loading: false,
+        errorSignup: null,
       }));
       return true;
     }

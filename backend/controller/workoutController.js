@@ -5,7 +5,8 @@ const errorMessages = require("../utils/errorMessages");
 //Getting all the workouts
 const workout_getAll = async (req, res) => {
   try {
-    const workouts = await Workout.find({}).sort({ createdAt: -1 });
+    const user_id = req.user._id; //from the requireAuth middleware
+    const workouts = await Workout.find({ user_id }).sort({ createdAt: -1 });
     res.status(200).json(workouts);
   } catch (error) {
     console.log("Error: " + error);
@@ -30,8 +31,9 @@ const workout_get = async (req, res) => {
 //adding a workout
 const workout_add = async (req, res) => {
   const { title, reps, load } = req.body;
+  const user_id = req.user._id; //add the user_id as well to keep separate items for individual user
   try {
-    const workout = await Workout.create({ title, reps, load });
+    const workout = await Workout.create({ title, reps, load, user_id });
     res.status(200).json(workout);
   } catch (error) {
     console.log("Error: " + error);
@@ -55,8 +57,8 @@ const workout_delete = async (req, res) => {
 const workout_update = async (req, res) => {
   const update = req.body;
   const id = req.params.id;
-  console.log("Update = "+update);
-  console.log("Id = "+id);
+  console.log("Update = " + update);
+  console.log("Id = " + id);
   if (!isValidObjectId(id)) {
     return res.status(404).json({ error: errorMessages.OBJECT_ID_NOT_VALID });
   }

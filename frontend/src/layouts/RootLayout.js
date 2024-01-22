@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useAuthStore } from "../hooks/authStore";
 
 export default function RootLayout() {
@@ -6,7 +6,7 @@ export default function RootLayout() {
   const user = getUser();
 
   const handleLogout = (e) => {
-    e.preventDefault();
+    e.preventDefault();    
     logout();
   };
 

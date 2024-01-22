@@ -9,42 +9,42 @@ import {
 import AuthLayout from "./layouts/AuthLayout";
 import RootLayout from "./layouts/RootLayout";
 //pages
-import Home from "./pages/Home";
+import Home, { homeLoader } from "./pages/Home";
 import About from "./pages/About";
 import RouterError from "./pages/RouterError";
 import ErrorPage from "./pages/ErrorPage";
 import { Signup } from "./pages/auth/Signup";
 //actions
 import { homeActions } from "./actions/homeActions";
-import { signupAction as SignupAction } from "./actions/signupAction";
 //hooks
 import { useAuthStore } from "./hooks/authStore";
 import Login from "./pages/auth/Login";
 
-const routerMain = createBrowserRouter(
-  createRoutesFromElements(
-    <Route>
-      <Route path="/" element={<RootLayout />} errorElement={<RouterError />}>
-        <Route
-          path="/" //don't use "index" as action method does not work
-          element={<Home />}
-          // loader={homeLoader}
-          action={homeActions}
-        />
+const routerMain = (user) =>
+  createBrowserRouter(
+    createRoutesFromElements(
+      <Route>
+        <Route path="/" element={<RootLayout />} errorElement={<RouterError />}>
+          <Route
+            path="/" //don't use "index" as action method does not work
+            element={<Home />}
+            loader={homeLoader(user)}
+            action={homeActions(user)}
+          />
+        </Route>
+        {/* For all other routes, we will redirect the user to home */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
-      <Route path="signup" element={<Navigate to="/" replace />} />
-      <Route path="*" element={<ErrorPage />} />
-    </Route>
-  )
-);
+    )
+  );
 
 const routerAuth = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<AuthLayout />} errorElement={<RouterError />}>
       <Route path="/" element={<Login />} />
-      <Route path="signup" element={<Signup />} action={SignupAction} />
+      <Route path="signup" element={<Signup />} />
       <Route path="about" element={<About />} />
-      <Route path="*" element={<ErrorPage />} />
+      <Route path="*" element={<Navigate to="/" replace/>} />
     </Route>
   )
 );
@@ -56,7 +56,7 @@ function App() {
   if (!user) {
     return <RouterProvider router={routerAuth} />;
   }
-  return <RouterProvider router={routerMain} />;
+  return <RouterProvider router={routerMain(user)} />;
 }
 
 export default App;

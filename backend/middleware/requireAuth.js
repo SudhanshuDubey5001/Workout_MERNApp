@@ -17,7 +17,7 @@ const requireAuth = async (req, res, next) => {
   try {
     const { _id } = jwt.verify(token, process.env.SECRET);
     //attach a new property user in the request so all the request can access that
-    req.user = await User.findOne({ _id }).select("_id"); //just select the _id
+    req.user = await User.findOne({ _id }).select("_id") //just select the _id
     next();
   } catch (error) {
     res.status(401).json({ error: "Something went wrong while authenticating the user" });

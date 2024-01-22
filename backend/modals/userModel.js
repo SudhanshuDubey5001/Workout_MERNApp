@@ -72,7 +72,7 @@ const validationEmailPass = (email, password) => {
   }
   if (!validator.isStrongPassword(password)) {
     throw Error(
-      "The password must include 1 letter, 1 number and special character"
+      "The password must be atleast 8 characters long, include 1 small and 1 capital letters, 1 number and special character"
     );
   }
 };

@@ -9,7 +9,11 @@ export const WorkoutForm = () => {
   if (data) {
     //to reset the data once user has successfully submitted
     if (!data.error) {
-      formRef.current.reset();
+      if (formRef) {
+        if (formRef.current) {
+          formRef.current.reset();
+        }
+      }
     }
   }
 
@@ -35,5 +39,3 @@ export const WorkoutForm = () => {
     </div>
   );
 };
-
-
